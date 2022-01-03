@@ -1,10 +1,12 @@
 const { Model, DataTypes } = require("sequelize");
 
+//using extending Model to init
 module.exports = (sequelize) => {
-  class Food extends Model {}
+  class Food extends Model { }
 
   Food.init(
     {
+      // Model attributes(屬性) are defined here
       foodId: {
         field: "food_id",
         type: DataTypes.BIGINT,
@@ -37,8 +39,8 @@ module.exports = (sequelize) => {
       sequelize,
       tableName: "foods",
       modelName: "Food",
-      createdAt: "created_at",
-      updatedAt: "updated_at",
+      //createdAt: "created_at",
+      //updatedAt: "updated_at",
     }
   );
 
