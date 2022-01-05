@@ -43,6 +43,7 @@ const {
   }
 })();
 
+// 透過 new 建立 Sequelize 這個 class，而 sequelize 就是物件 instance
 const sequelize = new Sequelize(database, user, password, {
   host,
   dialect: "postgres",

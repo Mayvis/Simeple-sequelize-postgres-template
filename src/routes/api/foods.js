@@ -67,13 +67,12 @@ router.post(
     try {
       const { name, type } = req.body;
 
-      const food = await Food.create({
+      const food = await Food.build({ //原本是用create = build + save
         name,
         type,
         createdAt: Date.now(),
         updatedAt: Date.now(),
       });
-
       const { dataValues } = await food.save();
       return res.status(200).json({ message: "ok", data: dataValues });
     } catch (errors) {
@@ -111,9 +110,12 @@ router.put(
           returning: true,
         }
       );
+      console.log(food[1]);
+      if (food[1].length == 0)
+        return res.status(404).json({ message: "data doesn't exist" });
       return res.status(200).json({ message: "ok", data: food[1] });
     } catch (errors) {
-      res.status(400).json({ message: "errors", errors });
+      return res.status(400).json({ message: "errors", errors });
     }
   }
 );
@@ -135,12 +137,15 @@ router.delete(
         returning: true,
       });
 
-      return res.status(200).json({ message: "ok", data: food });
+      if (!food)
+        return res.status(404).json({ message: "data doesn't exist" });
+      return res.status(200).json({ message: "delete finished", data: food });
     } catch (errors) {
-      res.status(400).json({ message: "errors", errors });
+      //res.status(400).json({ message: "errors", errors });
+      return res.status(400).json({ message: "errors", errors });
     }
 
-    return res.status(200).json({ message: "ok" });
+    //return res.status(200).json({ message: "ok" });
   }
 );
 
